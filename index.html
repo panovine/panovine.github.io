@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanoVine: Whole-Body Visuomotor Control for Soft Growing Vine Robot</title>
+<meta name="description" content="PanoVine: Whole-Body Visuomotor Control for Soft Growing Vine Robot.">
+<style>
+  :root{
+    --maxw: 1040px;
+    --ink: #1c2430;
+    --muted: #5c6675;
+    --accent: #1f5fbf;
+    --accent-soft: #eaf1fb;
+    --line: #e6e8ec;
+    --bg: #ffffff;
+    --card: #f7f8fa;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Noto Sans",sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px;}
+
+  /* Header */
+  header.hero{
+    padding:64px 0 36px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  header.hero h1{
+    font-size:2.05rem;
+    line-height:1.25;
+    font-weight:750;
+    letter-spacing:-0.01em;
+    margin:0 0 18px;
+  }
+  header.hero h1 .brand{color:var(--accent);}
+  .venue{
+    display:inline-block;
+    font-size:.92rem;
+    font-weight:600;
+    color:var(--accent);
+    background:var(--accent-soft);
+    border-radius:999px;
+    padding:5px 16px;
+    margin-bottom:18px;
+    letter-spacing:.02em;
+  }
+  .authors{color:var(--muted);font-size:1rem;margin:6px 0 4px;}
+  .anon-note{
+    color:var(--muted);
+    font-size:.9rem;
+    font-style:italic;
+    margin-top:8px;
+  }
+  .badges{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:9px 16px;
+    font-size:.93rem;font-weight:600;color:var(--ink);
+    background:#fff;
+  }
+  .badge.disabled{color:var(--muted);background:var(--card);cursor:not-allowed;}
+
+  /* Sections */
+  section{padding:48px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  h2{
+    font-size:1.5rem;font-weight:720;text-align:center;
+    margin:0 0 8px;letter-spacing:-0.01em;
+  }
+  .section-sub{text-align:center;color:var(--muted);max-width:760px;margin:0 auto 30px;font-size:1rem;}
+  h3{font-size:1.18rem;font-weight:680;margin:34px 0 6px;}
+
+  p.body{margin:0 auto;max-width:820px;}
+  .abstract p{text-align:justify;}
+
+  figure{margin:0;}
+  .figimg{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);display:block;background:#fff;}
+  figcaption{font-size:.9rem;color:var(--muted);margin-top:10px;text-align:center;}
+  figcaption b{color:var(--ink);}
+
+  .teaser{margin:6px auto 0;max-width:820px;}
+
+  /* Video blocks */
+  video.clip{
+    width:100%;height:auto;display:block;
+    border-radius:12px;border:1px solid var(--line);background:#000;
+  }
+  .vcard{margin-top:10px;}
+  .vlabel{font-weight:680;margin:14px 0 2px;font-size:1.02rem;}
+  .vdesc{color:var(--muted);font-size:.95rem;margin:0;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+  .cam-eq{height:clamp(260px,36vw,380px);object-fit:contain;}
+
+  .pill{
+    display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.03em;
+    text-transform:uppercase;padding:3px 10px;border-radius:6px;margin-bottom:8px;
+  }
+  .pill.ours{background:#e9f6ec;color:#1f7a3d;}
+  .pill.base{background:#fdecec;color:#b4322f;}
+
+  .keypts{max-width:820px;margin:18px auto 0;padding-left:1.1em;}
+  .keypts li{margin:7px 0;}
+
+  footer{padding:38px 0 60px;text-align:center;color:var(--muted);font-size:.9rem;}
+
+  .nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line);}
+  .nav .wrap{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;padding:11px 22px;}
+  .nav a{color:var(--muted);font-size:.9rem;font-weight:600;}
+  .nav a:hover{color:var(--accent);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1><span class="brand">PanoVine</span>: Whole-Body Visuomotor Control<br>for Soft Growing Vine Robot</h1>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="#abstract">Abstract</a>
+    <a href="#robot-design">Robot Design</a>
+    <a href="#vision">Whole-Body Vision</a>
+    <a href="#policy">Policy</a>
+    <a href="#course">Course Navigation</a>
+    <a href="#reaching">Object Reaching</a>
+  </div>
+</nav>
+
+<!-- Teaser -->
+<section id="teaser" style="padding-top:42px;">
+  <div class="wrap">
+    <figure class="teaser">
+      <img class="figimg" src="img/teaser.jpg" alt="PanoVine system overview">
+      <figcaption><b>PanoVine</b> features (A) a 6&nbsp;m soft growing vine robot with (B) 19 cameras distributed along its body.
+      (C) Identical action commands lead to drastically different configurations due to unpredictable buckling, hysteresis, and
+      environment interaction. (D) A learned whole-body visuomotor policy enables diverse navigation and manipulation skills.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section id="abstract" class="abstract">
+  <div class="wrap">
+    <h2>Abstract</h2>
+    <p class="body">Vine robots, a class of soft, growing robots, are well suited to navigating complex and confined
+    environments thanks to their compliant bodies and self-supporting growth mechanism. However, hysteresis, tether
+    interactions, and deformations make them difficult to predict and model, which limits conventional planning and control.
+    In this work we present a data-driven, vision-based control framework for the <b>first autonomous vine robot system</b>.
+    Our system integrates <b>19 cameras</b> distributed along the robot's body to provide comprehensive feedback of both the
+    robot state and the surrounding environment. Using this rich whole-body vision feedback, we train an end-to-end
+    visuomotor policy from demonstrations for closed-loop autonomous control. The policy aggregates information from
+    distributed sensing while remaining robust to inaccurate robot states and actuation. Experiments demonstrate robust
+    navigation and manipulation in challenging scenarios&mdash;steering through branched structures, climbing slopes,
+    traversing unsupported terrain, reaching objects precisely, and maneuvering through confined spaces and obstacles.</p>
+  </div>
+</section>
+
+<!-- Robot design / growth -->
+<section id="robot-design">
+  <div class="wrap">
+    <h2>Robot Design</h2>
+    <p class="section-sub">A 6&nbsp;m, seven-DoF eversion-based body grows from its tip and steers via six revolute joints,
+    extending along tortuous paths and squeezing through tight apertures.</p>
+    <figure class="vcard">
+      <video class="clip" src="video/clips/01_growth.mp4" autoplay muted loop playsinline></video>
+      <figcaption><b>Growth and steering.</b> The robot lengthens by everting body material at the tip and reshapes itself
+      with distributed bending joints.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Whole-body vision -->
+<section id="vision">
+  <div class="wrap">
+    <h2>Whole-Body Vision</h2>
+    <p class="section-sub">19 body-mounted RGB cameras are gradually revealed as the robot grows, collectively providing
+    multi-perspective feedback of both the robot body and its environment.</p>
+    <figure class="vcard">
+      <video class="clip" src="video/clips/03_wholebody_vision.mp4" style="max-width:620px;margin:0 auto;" autoplay muted loop playsinline></video>
+      <!-- <figcaption><b>Distributed camera system.</b> The 19 onboard cameras capture body deformation, contact, and
+      surrounding geometry that no single view could provide.</figcaption> -->
+    </figure>
+    <div class="grid2" style="margin-top:30px;">
+      <figure>
+        <img class="figimg cam-eq" src="img/camera_views.jpg" alt="Camera views during course navigation">
+        <figcaption><b>Course navigation.</b> Cameras are progressively revealed during growth; the robot observes the
+        branch, obstacles, and target across different views.</figcaption>
+      </figure>
+      <figure>
+        <img class="figimg cam-eq" src="img/camera_views_object.jpg" alt="Camera views during object reaching">
+        <figcaption><b>Object reaching.</b> The target becomes visible to successively more body cameras as the robot
+        extends and steers toward it.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Policy -->
+<section id="policy">
+  <div class="wrap">
+    <h2>Whole-Body Visuomotor Policy</h2>
+    <p class="section-sub">We learn an end-to-end visuomotor policy from teleoperated demonstrations. At each step it maps a
+    history of multi-view images and proprioception to an action chunk specifying how to grow and steer.</p>
+    <figure>
+      <img class="figimg" src="img/policy.jpg" alt="PanoVine policy architecture" style="max-width:620px;width:100%;margin:0 auto;">
+      <figcaption>Environment and robot states are observed through 19 cameras plus growth/steering sensors. Each image is
+      encoded by a ViT class token; vision tokens and proprioception are cross-attended by a diffusion-transformer policy
+      that predicts six steering actions and a growing action.</figcaption>
+    </figure>
+    <ul class="keypts">
+      <li><b>Multi-view correspondence.</b> Cross-attention learns implicit correspondences across views without relying on
+      unreliable extrinsic calibration of a continuously deforming body.</li>
+      <li><b>Relative proprioception &amp; actions.</b> Expressing observations and actions relative to the latest frame
+      improves robustness to actuation uncertainty and hysteresis.</li>
+      <li><b>Steering/growing rebalancing.</b> Rebalancing sparse steering windows against long pure-growth windows prevents
+      decisive steering events from being drowned out.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Complex course navigation -->
+<section id="course">
+  <div class="wrap">
+    <h2>Complex Course Navigation</h2>
+    <p class="section-sub">A 6&nbsp;m, 1.5&nbsp;m-tall course chaining five skills&mdash;branch selection, slope climbing,
+    unsupported-gap traversal, obstacle avoidance, and a sharp final turn. <b>PanoVine reaches 80% success.</b></p>
+
+    <figure class="vcard">
+      <span class="pill ours">Ours &middot; autonomous policy</span>
+      <video class="clip" src="video/clips/02_course_autonomous.mp4" autoplay muted loop playsinline></video>
+      <figcaption><b>Autonomous rollout.</b> The policy reactively steers through the branch, climbs the 45&deg; slope,
+      bends across the unsupported gap, avoids obstacles, and makes the final sharp turn to the exit.</figcaption>
+    </figure>
+
+    <figure class="vcard" style="margin-top:34px;">
+      <span class="pill base">Baseline &middot; open-loop trajectory replay</span>
+      <video class="clip" src="video/clips/04_course_replay.mp4" autoplay muted loop playsinline></video>
+      <figcaption><b>Replay baseline (0% success).</b> Replaying a successful demonstration open-loop collides with obstacles
+      and falls short of the goal, confirming the course is unsolvable without closed-loop visual feedback.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Object reaching -->
+<section id="reaching">
+  <div class="wrap">
+    <h2>Precise Object Reaching</h2>
+    <p class="section-sub">After 2&nbsp;m of growth the robot must align its tip with an object to within a small angular
+    tolerance, across seen and unseen objects at five locations. <b>PanoVine reaches 85% success.</b></p>
+
+    <figure class="vcard">
+      <span class="pill ours">Ours &middot; multi-camera policy</span>
+      <video class="clip" src="video/clips/05_reaching_multicam.mp4" autoplay muted loop playsinline></video>
+      <figcaption><b>Multi-camera reaching.</b> The policy grounds its steering on the object's visual appearance across
+      multiple body cameras, incrementally adjusting its bend as the object comes into view.</figcaption>
+    </figure>
+
+    <figure class="vcard" style="margin-top:34px;">
+      <span class="pill base">Baseline &middot; single-camera policy</span>
+      <video class="clip" src="video/clips/06_reaching_singlecam.mp4" autoplay muted loop playsinline></video>
+      <figcaption><b>Single-camera baseline (0% success).</b> With only the base camera, the object is occluded or leaves the
+      field of view; the policy fails to turn toward it and grows past it.</figcaption>
+    </figure>
+  </div>
+</section>
+
+</body>
+</html>

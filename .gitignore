@@ -1,0 +1,8 @@
+# Large source video — exceeds GitHub's 100 MB file limit.
+# Only the small web clips in video/clips/ are committed.
+video/final_v4.mp4
+
+# OS / editor cruft
+.DS_Store
+*.swp
+Thumbs.db
